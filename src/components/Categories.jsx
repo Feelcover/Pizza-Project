@@ -11,9 +11,6 @@ const Categories = () => {
   ];
   const [active, setActive] = React.useState(0);
 
-  const setActiveFunc = (index) => {
-    setActive(index);
-  };
 
   return (
     <div className="categories">
@@ -22,7 +19,7 @@ const Categories = () => {
           <li
             key={index}
             className={active === index ? "active" : ""}
-            onClick={() => setActiveFunc(index)}
+            onClick={() => setActive(index)}
           >
             {item}
           </li>
