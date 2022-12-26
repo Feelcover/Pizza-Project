@@ -1,0 +1,25 @@
+.ErrorContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 0 100px;
+  p {
+    margin-top: 20px;
+    font-size: 21px;
+    font-weight: 700;
+    background-color: #fe5f1e;
+    color: #FFFFFF;
+    padding: 10px;
+    border-radius: 10px;
+    transition: all 0.2s ease-in-out;
+    opacity: 0.8;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+.img {
+  max-width: 280px;
+}

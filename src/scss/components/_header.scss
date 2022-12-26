@@ -20,7 +20,10 @@
 
   &__logo {
     display: flex;
-
+    transition: all 0.2s ease-in-out;
+    &:hover{
+      opacity: 0.85;
+    }
     img {
       margin-right: 15px;
     }

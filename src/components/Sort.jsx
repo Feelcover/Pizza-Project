@@ -12,8 +12,10 @@ const Sort = () => {
 
   return (
     <div className="sort">
+
       <div className="sort__label">
-        <svg
+
+      <svg className="label-icon"
           width="10"
           height="6"
           viewBox="0 0 10 6"
@@ -25,7 +27,6 @@ const Sort = () => {
             fill="#2C2C2C"
           />
         </svg>
-        <b>Сортировка по:</b>
         <span onClick={() => setIsOpened(!isOpened)}>{sortArr[active]}</span>
       </div>
       {isOpened && (
