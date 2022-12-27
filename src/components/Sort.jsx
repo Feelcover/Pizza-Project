@@ -1,21 +1,28 @@
 import React from "react";
 
-const Sort = () => {
+const Sort = ({ value, onClickSort }) => {
   const [isOpened, setIsOpened] = React.useState(false);
-  const [active, setActive] = React.useState(0);
-  const sortArr = ["популярности", "цене", "алфавиту"];
+  const sortArr = [
+    { name: "популярности (+)", sort: "rating" },
+    { name: "популярности (-)", sort: "-rating" },
+    { name: "цене (дорогие)", sort: "price" },
+    { name: "цене (дешевые)", sort: "-price" },
+    { name: "алфавиту (a)", sort: "title" },
+    { name: "алфавиту (я)", sort: "-title" },
+  ];
 
-  const selectedClose = (index) => {
-    setActive(index);
+  const selectedClose = (item) => {
+    onClickSort(item);
     setIsOpened(false);
   };
 
   return (
     <div className="sort">
-
       <div className="sort__label">
+        <b>Сортировка по</b>
 
-      <svg className="label-icon"
+        <svg
+          className="label-icon"
           width="10"
           height="6"
           viewBox="0 0 10 6"
@@ -27,7 +34,7 @@ const Sort = () => {
             fill="#2C2C2C"
           />
         </svg>
-        <span onClick={() => setIsOpened(!isOpened)}>{sortArr[active]}</span>
+        <span onClick={() => setIsOpened(!isOpened)}>{value.name}</span>
       </div>
       {isOpened && (
         <div className="sort__popup">
@@ -35,15 +42,12 @@ const Sort = () => {
             {sortArr.map((item, index) => (
               <li
                 key={index}
-                className={active === index ? "active" : ""}
-                onClick={() => selectedClose(index)}
+                className={value.sort === item.sort ? "active" : ""}
+                onClick={() => selectedClose(item)}
               >
-                {item}
+                {item.name}
               </li>
             ))}
-            {/* <li className="active">популярности</li>
-            <li>цене</li>
-            <li>алфавиту</li> */}
           </ul>
         </div>
       )}
