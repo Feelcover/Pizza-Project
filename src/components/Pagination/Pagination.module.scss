@@ -1,0 +1,37 @@
+@import "../../scss/variables";
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  li {
+    a {
+      display: inline-flex;
+      margin: 0 10px;
+      justify-content: center;
+      width: 30px;
+      border: 2px solid rgba($color: $orange, $alpha: 0.7);
+      border-radius: 100%;
+      padding: 3px;
+      width: 35px;
+      height: 35px;
+      line-height: 26px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      &:hover {
+        background: $orange;
+        color: $gray-line;
+      }
+      font-size: 16px;
+      font-weight: 600;
+      color: $orange;
+    }
+  }
+  :global {
+    .selected {
+      a {
+        background-color: $orange;
+        color: $gray-line;
+      }
+    }
+  }
+}

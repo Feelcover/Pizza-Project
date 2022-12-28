@@ -10,13 +10,10 @@ import "../scss/app.scss";
 export const AppContext = createContext({});
 
 const App = () => {
-
-  const [searchValue, setSearchValue] = React.useState('');
+  const [searchValue, setSearchValue] = React.useState("");
   return (
-    <AppContext.Provider
-    value={{searchValue, setSearchValue}}
-    >
-      <div className="wrapper">
+    <div className="wrapper">
+      <AppContext.Provider value={{ searchValue, setSearchValue }}>
         <Header />
         <div className="content">
           <div className="container">
@@ -27,8 +24,8 @@ const App = () => {
             </Routes>
           </div>
         </div>
-      </div>
-    </AppContext.Provider>
+      </AppContext.Provider>
+    </div>
   );
 };
 
