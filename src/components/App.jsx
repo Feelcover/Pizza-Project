@@ -1,18 +1,20 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Header from "./components/Header";
-import ErrorPage from "./pages/ErrorPage/ErrorPage";
-import Home from "./pages/Home";
-import Basket from "./pages/Basket";
+import Header from "./Header";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
+import Home from "../pages/Home";
+import Basket from "../pages/Basket";
 import { createContext } from "react";
-import "./scss/app.scss";
+import "../scss/app.scss";
 
 export const AppContext = createContext({});
 
 const App = () => {
+
+  const [searchValue, setSearchValue] = React.useState('');
   return (
     <AppContext.Provider
-    value={{}}
+    value={{searchValue, setSearchValue}}
     >
       <div className="wrapper">
         <Header />

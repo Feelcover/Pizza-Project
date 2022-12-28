@@ -1,0 +1,44 @@
+.searchContainer {
+    position: relative;
+    @media (max-width:645px){
+        margin: 20px 0 10px;
+    }
+
+  .searchImg {
+    position: absolute;
+    top: 10px;
+    padding: 0 10px;
+  }
+  .search {
+    border-radius:  8px;
+    padding: 10px 35px;
+    width: 300px;
+    border:2px solid rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease-in-out;
+    &:focus{
+      width: 320px;
+        border: 2px solid rgba(0, 0, 0, 0.2);
+        }
+        @media (max-width:910px){
+          width: 220px;
+          margin-right: 10px;
+          &:focus{
+            width: 240px;
+              }
+      }
+  }
+  .searchClear {
+    position: absolute;
+    top:10px;
+    right: 5px;
+    margin: 0 5px 0;
+    width: 20px;
+    height: 20px;
+    opacity: 0.5;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}
