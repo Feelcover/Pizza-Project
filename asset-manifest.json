@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/Pizza-Project/static/css/main.bbc27803.css",
-    "main.js": "/Pizza-Project/static/js/main.39ba4f69.js",
+    "main.js": "/Pizza-Project/static/js/main.95b4f74c.js",
     "static/media/404.jpg": "/Pizza-Project/static/media/404.c6c71915c6c4ebed62cb.jpg",
     "static/media/pizza-logo.svg": "/Pizza-Project/static/media/pizza-logo.56ac87032d8f6fdf863326acd06c0d97.svg",
     "index.html": "/Pizza-Project/index.html",
     "static/media/search.svg": "/Pizza-Project/static/media/search.48c52bf5d459537e27c07f88eb08c050.svg",
     "main.bbc27803.css.map": "/Pizza-Project/static/css/main.bbc27803.css.map",
-    "main.39ba4f69.js.map": "/Pizza-Project/static/js/main.39ba4f69.js.map"
+    "main.95b4f74c.js.map": "/Pizza-Project/static/js/main.95b4f74c.js.map"
   },
   "entrypoints": [
     "static/css/main.bbc27803.css",
-    "static/js/main.39ba4f69.js"
+    "static/js/main.95b4f74c.js"
   ]
 }
