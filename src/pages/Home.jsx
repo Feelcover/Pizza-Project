@@ -9,25 +9,23 @@ import Pagination from "../components/Pagination/Pagination";
 const Home = () => {
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [categoryId, setCategoryId] = React.useState(0);
+  const [categoryId, setCategoryId] = React.useState(0); 
   const [sortType, setSortType] = React.useState({
     name: "популярности",
     sort: "rating",
   });
-  const [currentPage, setCurrentPage] = React.useState(1)
-  const {searchValue} = React.useContext(AppContext)
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const { searchValue } = React.useContext(AppContext);
 
   const order = sortType.sort.includes("-") ? "asc" : "desc";
   const sortBy = sortType.sort.replace("-", "");
   const category = categoryId > 0 ? `category=${categoryId}` : "";
-  const search = searchValue ? `&search=${searchValue}`:'';
-
- 
+  const search = searchValue ? `&search=${searchValue}` : "";
 
   React.useEffect(() => {
     setIsLoading(true);
     fetch(
-      `https://63a57314318b23efa793c24a.mockapi.io/Items?page=${currentPage}&limit=8&${category}&sortBy=${sortBy}&order=${order}${search}`,
+      `https://63a57314318b23efa793c24a.mockapi.io/Items?page=${currentPage}&limit=8&${category}&sortBy=${sortBy}&order=${order}${search}`
     )
       .then((res) => {
         return res.json();
@@ -39,10 +37,9 @@ const Home = () => {
     window.scrollTo(0, 0);
   }, [categoryId, sortType, searchValue, currentPage]);
 
-
   const searchFilter = (arr) => {
-    return arr.filter((e) => e.name.toLowerCase().includes(searchValue))
-  }
+    return arr.filter((e) => e.name.toLowerCase().includes(searchValue));
+  };
 
   return (
     <>
@@ -54,9 +51,11 @@ const Home = () => {
       <div className="content__items">
         {isLoading
           ? [...new Array(8)].map((arr, i) => <Loader key={i} />)
-          : searchFilter(items).map((item) => <Pizza key={item.id} {...item} />)}
+          : searchFilter(items).map((item) => (
+              <Pizza key={item.id} {...item} />
+            ))}
       </div>
-      <Pagination changePage={setCurrentPage}/>
+      <Pagination changePage={setCurrentPage} />
     </>
   );
 };

@@ -3,12 +3,10 @@ import React from "react";
 const Sort = ({ value, onClickSort }) => {
   const [isOpened, setIsOpened] = React.useState(false);
   const sortArr = [
-    { name: "популярности (+)", sort: "rating" },
-    { name: "популярности (-)", sort: "-rating" },
+    { name: "популярности", sort: "rating" },
     { name: "цене (дорогие)", sort: "price" },
     { name: "цене (дешевые)", sort: "-price" },
-    { name: "алфавиту (a)", sort: "title" },
-    { name: "алфавиту (я)", sort: "-title" },
+    { name: "алфавиту", sort: "title" },
   ];
 
   const selectedClose = (item) => {
