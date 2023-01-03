@@ -1,16 +1,16 @@
-import React from "react";
 import {Link} from "react-router-dom"
 import logo from "../img/pizza-logo.svg";
-import { AppContext } from "./App";
+import { setSearchValue } from "../services/slices/filterSlice";
+import { useDispatch } from "react-redux";
 import Search from "./Search/Search";
 
 const Header = () => {
-  const {setSearchValue} = React.useContext(AppContext);
+ const dispatch = useDispatch();
   return (
     <div className="header">
       <div className="container">
         <Link to="/">
-        <div className="header__logo" onClick={()=>setSearchValue('')}>
+        <div className="header__logo" onClick={()=>dispatch(setSearchValue(''))}>
           <img width="38" src={logo} alt="Pizza logo" />
           <div>
             <h1>Shop of Pizza</h1>

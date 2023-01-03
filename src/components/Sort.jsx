@@ -1,7 +1,11 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsOpened } from "../services/slices/filterSlice";
 
 const Sort = ({ value, onClickSort }) => {
-  const [isOpened, setIsOpened] = React.useState(false);
+  const isOpened = useSelector((action)=>action.filterReducer.isOpened)
+  const dispatch = useDispatch();
+
   const sortArr = [
     { name: "популярности", sort: "rating" },
     { name: "цене (дорогие)", sort: "price" },
@@ -11,7 +15,7 @@ const Sort = ({ value, onClickSort }) => {
 
   const selectedClose = (item) => {
     onClickSort(item);
-    setIsOpened(false);
+    dispatch(setIsOpened(false));
   };
 
   return (
@@ -32,7 +36,7 @@ const Sort = ({ value, onClickSort }) => {
             fill="#2C2C2C"
           />
         </svg>
-        <span onClick={() => setIsOpened(!isOpened)}>{value.name}</span>
+        <span onClick={() =>dispatch(setIsOpened(!isOpened))}>{value.name}</span>
       </div>
       {isOpened && (
         <div className="sort__popup">

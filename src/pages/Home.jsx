@@ -4,20 +4,19 @@ import { Loader } from "../components/Pizza/Loader";
 import Pizza from "../components/Pizza/Pizza";
 import Sort from "../components/Sort";
 import Categories from "../components/Categories";
-import { AppContext } from "../components/App";
 import Pagination from "../components/Pagination/Pagination";
-import { setCategoryId, setSortType } from "../services/slices/filterSlice";
+import { setCategoryId, setSortType, setCurrentPage } from "../services/slices/filterSlice";
 
 const Home = () => {
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const categoryId = useSelector((state) => state.filterReducer.categoryId);
   const sortType = useSelector((state) => state.filterReducer.sortType);
+  const currentPage = useSelector((state)=> state.filterReducer.currentPage)
+  const searchValue = useSelector((state)=> state.filterReducer.searchValue);
 
   const dispatch = useDispatch();
 
-  const [currentPage, setCurrentPage] = React.useState(1);
-  const { searchValue } = React.useContext(AppContext);
 
   const order = sortType.sort.includes("-") ? "asc" : "desc";
   const sortBy = sortType.sort.replace("-", "");
@@ -60,7 +59,7 @@ const Home = () => {
               <Pizza key={item.id} {...item} />
             ))}
       </div>
-      <Pagination changePage={setCurrentPage} />
+      <Pagination changePage={(id) => dispatch(setCurrentPage(id))} />
     </>
   );
 };

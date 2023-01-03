@@ -1,11 +1,12 @@
-import React from "react";
 import imgSearch from "../../img/search.svg";
 import imgClose from "../../img/close.png";
-import { AppContext } from "../App";
 import styles from "./Search.module.scss";
+import { useSelector, useDispatch } from "react-redux";
+import { setSearchValue } from "../../services/slices/filterSlice";
 
 const Search = () => {
-  const { searchValue, setSearchValue } = React.useContext(AppContext);
+  const searchValue = useSelector((state) =>state.filterReducer.searchValue);
+  const dispatch = useDispatch();
 
   return (
     <div className={styles.searchContainer}>
@@ -13,7 +14,7 @@ const Search = () => {
       <input
         className={styles.search}
         placeholder="Поиск..."
-        onChange={(evt) => setSearchValue(evt.target.value)}
+        onChange={(evt) => dispatch(setSearchValue(evt.target.value))}
         value={searchValue}
       />
       {searchValue && (
@@ -21,7 +22,7 @@ const Search = () => {
           className={styles.searchClear}
           src={imgClose}
           alt="close"
-          onClick={()=>setSearchValue('')}
+          onClick={()=>dispatch(setSearchValue(''))}
         ></img>
       )}
     </div>
