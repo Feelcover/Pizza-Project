@@ -5,18 +5,22 @@ import Pizza from "../components/Pizza/Pizza";
 import Sort from "../components/Sort";
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination/Pagination";
-import { setCategoryId, setSortType, setCurrentPage } from "../services/slices/filterSlice";
+import {
+  setCategoryId,
+  setSortType,
+  setCurrentPage,
+} from "../services/slices/filterSlice";
+import axios from "axios";
 
 const Home = () => {
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const categoryId = useSelector((state) => state.filterReducer.categoryId);
   const sortType = useSelector((state) => state.filterReducer.sortType);
-  const currentPage = useSelector((state)=> state.filterReducer.currentPage)
-  const searchValue = useSelector((state)=> state.filterReducer.searchValue);
+  const currentPage = useSelector((state) => state.filterReducer.currentPage);
+  const searchValue = useSelector((state) => state.filterReducer.searchValue);
 
   const dispatch = useDispatch();
-
 
   const order = sortType.sort.includes("-") ? "asc" : "desc";
   const sortBy = sortType.sort.replace("-", "");
@@ -25,16 +29,18 @@ const Home = () => {
 
   React.useEffect(() => {
     setIsLoading(true);
-    fetch(
-      `https://63a57314318b23efa793c24a.mockapi.io/Items?page=${currentPage}&limit=8&${category}&sortBy=${sortBy}&order=${order}${search}`
-    )
+    axios
+      .get(
+        `https://63a57314318b23efa793c24a.mockapi.io/Items?page=${currentPage}&limit=8&${category}&sortBy=${sortBy}&order=${order}${search}`
+      )
       .then((res) => {
-        return res.json();
-      })
-      .then((json) => {
-        setItems(json);
+        setItems(res.data);
         setIsLoading(false);
+      })
+      .catch(function (error) {
+        console.log(error);
       });
+
     window.scrollTo(0, 0);
   }, [categoryId, sortType, searchValue, currentPage]);
 
@@ -49,7 +55,10 @@ const Home = () => {
           value={categoryId}
           onClickCategory={(id) => dispatch(setCategoryId(id))}
         />
-        <Sort value={sortType} onClickSort={(id) => dispatch(setSortType(id))} />
+        <Sort
+          value={sortType}
+          onClickSort={(id) => dispatch(setSortType(id))}
+        />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
