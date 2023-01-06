@@ -1,5 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import QueryString from "qs";
 import { Loader } from "../components/Pizza/Loader";
 import Pizza from "../components/Pizza/Pizza";
 import Sort from "../components/Sort";
@@ -10,17 +12,17 @@ import {
   setSortType,
   setCurrentPage,
 } from "../services/slices/filterSlice";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const categoryId = useSelector((state) => state.filterReducer.categoryId);
-  const sortType = useSelector((state) => state.filterReducer.sortType);
-  const currentPage = useSelector((state) => state.filterReducer.currentPage);
-  const searchValue = useSelector((state) => state.filterReducer.searchValue);
+  const { categoryId, sortType, currentPage, searchValue } = useSelector(
+    (state) => state.filterReducer
+  );
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const order = sortType.sort.includes("-") ? "asc" : "desc";
   const sortBy = sortType.sort.replace("-", "");
@@ -44,8 +46,24 @@ const Home = () => {
     window.scrollTo(0, 0);
   }, [categoryId, sortType, searchValue, currentPage]);
 
+  React.useEffect(() => {
+    const queryString = QueryString.stringify(
+      {
+        sort: sortType.sort,
+        categoryId,
+        currentPage,
+      },
+      { addQueryPrefix: true }
+    );
+    navigate(queryString);
+  }, [categoryId, sortType, searchValue, currentPage]);
+
   const searchFilter = (arr) => {
     return arr.filter((e) => e.name.toLowerCase().includes(searchValue));
+  };
+
+  const changePage = (num) => {
+    dispatch(setCurrentPage(num));
   };
 
   return (
@@ -68,7 +86,7 @@ const Home = () => {
               <Pizza key={item.id} {...item} />
             ))}
       </div>
-      <Pagination changePage={(id) => dispatch(setCurrentPage(id))} />
+      <Pagination currentPage={currentPage} changePage={changePage} />
     </>
   );
 };

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setIsOpened } from "../services/slices/filterSlice";
 
 const Sort = ({ value, onClickSort }) => {
-  const isOpened = useSelector((action)=>action.filterReducer.isOpened)
+  const isOpened = useSelector((action) => action.filterReducer.isOpened);
   const dispatch = useDispatch();
 
   const sortArr = [
@@ -17,6 +17,18 @@ const Sort = ({ value, onClickSort }) => {
     onClickSort(item);
     dispatch(setIsOpened(false));
   };
+
+  React.useEffect(() => {
+    function handleEscKeydown(evt) {
+      if (evt.key === "Escape") {
+        dispatch(setIsOpened(false));
+      }
+    }
+    document.addEventListener("keydown", handleEscKeydown);
+    return () => {
+      document.removeEventListener("keydown", handleEscKeydown);
+    };
+  }, []);
 
   return (
     <div className="sort">
@@ -36,10 +48,14 @@ const Sort = ({ value, onClickSort }) => {
             fill="#2C2C2C"
           />
         </svg>
-        <span onClick={() =>dispatch(setIsOpened(!isOpened))}>{value.name}</span>
+        <span onClick={() => dispatch(setIsOpened(!isOpened))}>
+          {value.name}
+        </span>
       </div>
       {isOpened && (
-        <div className="sort__popup">
+        <div className="sort__popup"
+         
+        >
           <ul>
             {sortArr.map((item, index) => (
               <li

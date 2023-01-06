@@ -2,21 +2,32 @@ import React from "react";
 import imgSearch from "../../img/search.svg";
 import imgClose from "../../img/close.png";
 import styles from "./Search.module.scss";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setSearchValue } from "../../services/slices/filterSlice";
-import debounce from "lodash.debounce"
+import debounce from "lodash.debounce";
 
 const Search = () => {
-  const searchValue = useSelector((state) =>state.filterReducer.searchValue);
+  const [value, setValue] = React.useState("");
   const dispatch = useDispatch();
   const inputRef = React.useRef();
   const onClear = () => {
-    dispatch(setSearchValue(''));
+    dispatch(setSearchValue(""));
+    setValue('');
     inputRef.current.focus();
-  }
-  const onChange = (evt) =>{
-    dispatch(setSearchValue(evt.target.value))
-  }
+  };
+
+  const updateValueDelay = React.useCallback(
+    debounce((e) => {
+      console.log(e);
+      dispatch(setSearchValue(e));
+    }, 450),
+    []
+  );
+
+  const onChange = (evt) => {
+    setValue(evt.target.value);
+    updateValueDelay(evt.target.value);
+  };
 
   return (
     <div className={styles.searchContainer}>
@@ -26,9 +37,9 @@ const Search = () => {
         className={styles.search}
         placeholder="Поиск..."
         onChange={(evt) => onChange(evt)}
-        value={searchValue}
+        value={value}
       />
-      {searchValue && (
+      {value && (
         <img
           className={styles.searchClear}
           src={imgClose}
