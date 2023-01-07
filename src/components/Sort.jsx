@@ -12,6 +12,8 @@ export const sortArr = [
 const Sort = ({ value, onClickSort }) => {
   const isOpened = useSelector((action) => action.filterReducer.isOpened);
   const dispatch = useDispatch();
+  const sortRef = React.useRef();
+
   const selectedClose = (item) => {
     onClickSort(item);
     dispatch(setIsOpened(false));
@@ -23,14 +25,22 @@ const Sort = ({ value, onClickSort }) => {
         dispatch(setIsOpened(false));
       }
     }
+    const handleCloseOutsideClick = (evt) => {
+      if (!evt.path.includes(sortRef.current)) {
+        dispatch(setIsOpened(false));
+      }
+    };
     document.addEventListener("keydown", handleEscKeydown);
+    document.body.addEventListener("click", handleCloseOutsideClick);
+
     return () => {
       document.removeEventListener("keydown", handleEscKeydown);
+      document.body.removeEventListener("click", handleCloseOutsideClick);
     };
   }, []);
 
   return (
-    <div className="sort">
+    <div className="sort" ref={sortRef}>
       <div className="sort__label">
         <b>Сортировка по</b>
 
@@ -52,9 +62,7 @@ const Sort = ({ value, onClickSort }) => {
         </span>
       </div>
       {isOpened && (
-        <div className="sort__popup"
-         
-        >
+        <div className="sort__popup">
           <ul>
             {sortArr.map((item, index) => (
               <li

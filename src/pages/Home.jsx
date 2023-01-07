@@ -21,24 +21,12 @@ const Home = () => {
   const { categoryId, sortType, currentPage, searchValue } = useSelector(
     (state) => state.filterReducer
   );
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isFirstRender = React.useRef(false);
+  const isSearch = React.useRef(false);
 
-  React.useEffect(() => {
-    if (window.location.search) {
-      const params = QueryString.parse(window.location.search.substring(1));
-      const sortProp = sortArr.find((item) => item.sort === params.sort);
-      dispatch(
-        setUrlFilters({
-          ...params,
-          sortProp,
-        })
-      );
-    }
-  }, []);
-
-  React.useEffect(() => {
+  const getItems = () => {
     const order = sortType.sort.includes("-") ? "asc" : "desc";
     const sortBy = sortType.sort.replace("-", "");
     const category = categoryId > 0 ? `category=${categoryId}` : "";
@@ -55,11 +43,24 @@ const Home = () => {
       .catch(function (error) {
         console.log(error);
       });
-
-    window.scrollTo(0, 0);
-  }, [categoryId, sortType, searchValue, currentPage]);
+  };
 
   React.useEffect(() => {
+    if (window.location.search) {
+      const params = QueryString.parse(window.location.search.substring(1));
+      const sortProp = sortArr.find((item) => item.sort === params.sort);
+      dispatch(
+        setUrlFilters({
+          ...params,
+          sortProp,
+        })
+      );
+      isSearch.current = true;
+    }
+  }, []);
+
+  React.useEffect(() => {
+   if (isFirstRender.current){
     const queryString = QueryString.stringify(
       {
         sort: sortType.sort,
@@ -69,8 +70,17 @@ const Home = () => {
       { addQueryPrefix: true }
     );
     navigate(queryString);
+   }
+   isFirstRender.current = true;
   }, [categoryId, sortType, searchValue, currentPage]);
 
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+    if (!isSearch.current) {
+      getItems();
+    }
+    isSearch.current = false;
+  }, [categoryId, sortType, searchValue, currentPage]);
   const searchFilter = (arr) => {
     return arr.filter((e) => e.name.toLowerCase().includes(searchValue));
   };
