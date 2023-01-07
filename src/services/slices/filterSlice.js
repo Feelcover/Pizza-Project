@@ -30,6 +30,11 @@ export const filterSlice = createSlice({
     setIsOpened: (state, action) => {
       state.isOpened = action.payload;
     },
+    setUrlFilters: (state, action)=>{
+      state.categoryId = Number(action.payload.categoryId);
+      state.currentPage = Number(action.payload.currentPage);
+      state.sortType = action.payload.sortProp;
+    },
   },
 });
 
@@ -39,6 +44,7 @@ export const {
   setCurrentPage,
   setSearchValue,
   setIsOpened,
+  setUrlFilters
 } = filterSlice.actions;
 
 export default filterSlice.reducer;

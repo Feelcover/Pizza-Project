@@ -2,17 +2,16 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsOpened } from "../services/slices/filterSlice";
 
+export const sortArr = [
+  { name: "популярности", sort: "rating" },
+  { name: "цене (дорогие)", sort: "price" },
+  { name: "цене (дешевые)", sort: "-price" },
+  { name: "алфавиту", sort: "title" },
+];
+
 const Sort = ({ value, onClickSort }) => {
   const isOpened = useSelector((action) => action.filterReducer.isOpened);
   const dispatch = useDispatch();
-
-  const sortArr = [
-    { name: "популярности", sort: "rating" },
-    { name: "цене (дорогие)", sort: "price" },
-    { name: "цене (дешевые)", sort: "-price" },
-    { name: "алфавиту", sort: "title" },
-  ];
-
   const selectedClose = (item) => {
     onClickSort(item);
     dispatch(setIsOpened(false));

@@ -4,13 +4,14 @@ import axios from "axios";
 import QueryString from "qs";
 import { Loader } from "../components/Pizza/Loader";
 import Pizza from "../components/Pizza/Pizza";
-import Sort from "../components/Sort";
+import Sort, { sortArr } from "../components/Sort";
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination/Pagination";
 import {
   setCategoryId,
   setSortType,
   setCurrentPage,
+  setUrlFilters,
 } from "../services/slices/filterSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -24,12 +25,24 @@ const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const order = sortType.sort.includes("-") ? "asc" : "desc";
-  const sortBy = sortType.sort.replace("-", "");
-  const category = categoryId > 0 ? `category=${categoryId}` : "";
-  const search = searchValue ? `&search=${searchValue}` : "";
+  React.useEffect(() => {
+    if (window.location.search) {
+      const params = QueryString.parse(window.location.search.substring(1));
+      const sortProp = sortArr.find((item) => item.sort === params.sort);
+      dispatch(
+        setUrlFilters({
+          ...params,
+          sortProp,
+        })
+      );
+    }
+  }, []);
 
   React.useEffect(() => {
+    const order = sortType.sort.includes("-") ? "asc" : "desc";
+    const sortBy = sortType.sort.replace("-", "");
+    const category = categoryId > 0 ? `category=${categoryId}` : "";
+    const search = searchValue ? `&search=${searchValue}` : "";
     setIsLoading(true);
     axios
       .get(
