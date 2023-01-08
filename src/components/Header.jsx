@@ -1,27 +1,32 @@
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 import logo from "../img/pizza-logo.svg";
 import { setSearchValue } from "../services/slices/filterSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Search from "./Search/Search";
 
 const Header = () => {
- const dispatch = useDispatch();
+  const { totalPrice, items } = useSelector((state) => state.basketSlice);
+  const dispatch = useDispatch();
+
   return (
     <div className="header">
       <div className="container">
         <Link to="/">
-        <div className="header__logo" onClick={()=>dispatch(setSearchValue(''))}>
-          <img width="38" src={logo} alt="Pizza logo" />
-          <div>
-            <h1>Shop of Pizza</h1>
-            <p>Самая лучшая пиццерия</p>
+          <div
+            className="header__logo"
+            onClick={() => dispatch(setSearchValue(""))}
+          >
+            <img width="38" src={logo} alt="Pizza logo" />
+            <div>
+              <h1>Shop of Pizza</h1>
+              <p>Самая лучшая пиццерия</p>
+            </div>
           </div>
-        </div>
         </Link>
-        <Search/>
+        <Search />
         <div className="header__cart">
           <Link to="/Basket" className="button button--cart">
-            <span>520 ₽</span>
+            <span>{totalPrice} ₽</span>
             <div className="button__delimiter"></div>
             <svg
               width="18"
@@ -52,7 +57,7 @@ const Header = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            <span>3</span>
+            <span>{items.length}</span>
           </Link>
         </div>
       </div>

@@ -1,10 +1,30 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addItem } from "../../services/slices/basketSlice";
 
-const Pizza = ({ name, price, imageUrl, sizes, types }) => {
+const Pizza = ({ name, price, imageUrl, sizes, types, id }) => {
+  const pizzaTypes = ["тонкое", "традиционное"];
+
   const [activeType, setActiveType] = React.useState(0);
   const [activeSize, setActiveSize] = React.useState(0);
+  const dispatch = useDispatch();
+  const itemCounter = useSelector((state) =>
+    state.basketSlice.items.find((item) => item.id === id)
+  );
+  const isCountAdded = itemCounter ? itemCounter.count : null;
 
-  const pizzaTypes = ["тонкое", "традиционное"];
+  const addInBasket = () => {
+    const item = {
+      name,
+      price,
+      imageUrl,
+      type: pizzaTypes[activeType],
+      size: activeSize,
+      id,
+    };
+    dispatch(addItem(item));
+  };
+
   return (
     <div className="pizza-block">
       <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
@@ -35,7 +55,10 @@ const Pizza = ({ name, price, imageUrl, sizes, types }) => {
       </div>
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">от {price} ₽</div>
-        <div className="button button--outline button--add">
+        <div
+          className="button button--outline button--add"
+          onClick={addInBasket}
+        >
           <svg
             width="12"
             height="12"
@@ -49,7 +72,7 @@ const Pizza = ({ name, price, imageUrl, sizes, types }) => {
             />
           </svg>
           <span>Добавить</span>
-          <i>2</i>
+          {isCountAdded > 0 && <i>{isCountAdded}</i>}
         </div>
       </div>
     </div>
