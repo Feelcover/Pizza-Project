@@ -19,22 +19,23 @@ const basketSlice = createSlice({
   initialState,
   reducers: {
     addItem: (state, action) => {
-      const repeat = state.items.find(
-        (item) => item.basketId === action.payload
-      );
-      if (repeat) {
-        repeat.count++;
-      } else {
-        state.items.push({
-          ...action.payload,
-          count: 1,
-          basketId: Math.random(),
-        });
-      }
+   const repeatSize = state.items.find((item)=>item.size === action.payload.size);
+   const repeatType = state.items.find((item)=>item.type === action.payload.type);
+   const repeatId = state.items.find((item)=>item.id === action.payload.id);
+
+  
+   if(repeatSize&&repeatType){
+    repeatSize.count++
+   }else{state.items.push({
+    ...action.payload,
+    count: 1,
+    basketName: action.payload.size + action.payload.type + action.payload.id,
+  });}
+
       calculate(state);
     },
     removeItem: (state, action) => {
-      state.items = state.items.filter((item) => item.basketId !== action.payload);
+      state.items = state.items.filter((item) => item.basketName !== action.payload);
       calculate(state);
     },
     clearBasket: (state) => {
@@ -42,7 +43,7 @@ const basketSlice = createSlice({
       calculate(state);
     },
     decrementCounter: (state, action) => {
-      const item = state.items.find((item) => item.basketId === action.payload);
+      const item = state.items.find((item) => item.basketName === action.payload);
       if (item.count > 1) {
         item.count--;
         calculate(state);
@@ -50,7 +51,7 @@ const basketSlice = createSlice({
     },
     incrementCounter:(state, action) => {
       const repeat = state.items.find(
-        (item) => item.basketId === action.payload
+        (item) => item.basketName === action.payload
       );
         repeat.count++;
         calculate(state);
