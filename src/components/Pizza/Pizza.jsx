@@ -2,8 +2,10 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../../services/slices/basketSlice";
 
+
+export const pizzaTypes = ["тонкое", "традиционное"];
+
 const Pizza = ({ name, price, imageUrl, sizes, types, id }) => {
-  const pizzaTypes = ["тонкое", "традиционное"];
 
   const [activeType, setActiveType] = React.useState(0);
   const [activeSize, setActiveSize] = React.useState(0);

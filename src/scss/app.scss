@@ -116,7 +116,7 @@ body {
   width: $container-width;
   margin: 0 auto;
 
-  &--cart {
+  &--basket {
     max-width: 820px;
     margin: 90px auto;
     .content__title {
@@ -125,7 +125,7 @@ body {
   }
 }
 
-.cart {
+.basket {
   &__top {
     display: flex;
     justify-content: space-between;
@@ -375,7 +375,7 @@ body {
 
   &--empty {
     margin: 80px auto;
-    width: 620px;
+    max-width: 640px;
     text-align: center;
 
     h2 {

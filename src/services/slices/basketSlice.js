@@ -10,11 +10,17 @@ const basketSlice = createSlice({
   initialState,
   reducers: {
     addItem: (state, action) => {
-      const repeatObject = state.items.find(
+      const repeatIdObject = state.items.find(
         (item) => item.id === action.payload.id
       );
-      if (repeatObject) {
-        repeatObject.count++;
+      const repeatTypeObject = state.items.find(
+        (item) => item.type === action.payload.type
+      );
+      const repeatSizeObject = state.items.find(
+        (item) => item.size === action.payload.size
+      );
+      if (repeatIdObject && repeatTypeObject && repeatSizeObject) {
+        repeatIdObject.count++;
       } else {
         state.items.push({
           ...action.payload,
