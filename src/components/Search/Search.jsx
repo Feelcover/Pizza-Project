@@ -10,6 +10,8 @@ const Search = () => {
   const [value, setValue] = React.useState("");
   const dispatch = useDispatch();
   const inputRef = React.useRef();
+  const [startF, pending] = React.useTransition({timeoutMs:450})
+
   const onClear = () => {
     dispatch(setSearchValue(""));
     setValue('');
@@ -20,8 +22,8 @@ const Search = () => {
     debounce((e) => {
       console.log(e);
       dispatch(setSearchValue(e));
-    }, 450),
-    []
+    }, 450)
+    ,[]
   );
 
   const onChange = (evt) => {

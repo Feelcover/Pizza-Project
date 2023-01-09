@@ -21,7 +21,7 @@ const Pizza = ({ name, price, imageUrl, sizes, types, id }) => {
       price,
       imageUrl,
       type: pizzaTypes[activeType],
-      size: activeSize,
+      size: sizes[activeSize],
       id,
     };
     dispatch(addItem(item));

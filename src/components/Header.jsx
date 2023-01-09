@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Search from "./Search/Search";
 
 const Header = () => {
-  const { totalPrice, items } = useSelector((state) => state.basketSlice);
   const dispatch = useDispatch();
+  const { totalPrice, totalItems } = useSelector((state) => state.basketSlice);
 
   return (
     <div className="header">
@@ -57,7 +57,7 @@ const Header = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            <span>{items.length}</span>
+            <span>{totalItems}</span>
           </Link>
         </div>
       </div>

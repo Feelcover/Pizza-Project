@@ -6,7 +6,7 @@ import { clearBasket } from "../services/slices/basketSlice"
 
 const Basket = () => {
   const dispatch = useDispatch();
-  const { totalPrice, items } = useSelector((state) => state.basketSlice);
+  const { totalPrice, items, totalItems } = useSelector((state) => state.basketSlice);
   if (totalPrice) {
     return (
       <div className="container container--basket">
@@ -87,15 +87,15 @@ const Basket = () => {
             </div>
           </div>
           <div className="content__items">
-            {items?.map((item) => (
-              <BasketItem key={item.id} {...item} />
+            {items?.map((item, index) => (
+              <BasketItem key={index} {...item} />
             ))}
           </div>
           <div className="basket__bottom">
             <div className="basket__bottom-details">
               <span>
                 {" "}
-                Всего пицц: <b>{items.length} шт.</b>{" "}
+                Всего пицц: <b>{totalItems} шт.</b>{" "}
               </span>
               <span>
                 {" "}

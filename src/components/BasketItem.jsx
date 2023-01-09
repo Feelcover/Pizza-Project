@@ -1,11 +1,21 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
-import { addItem } from '../services/slices/basketSlice';
+import { removeItem, addItem, decrementCounter, incrementCounter } from '../services/slices/basketSlice';
 
-const sizes = [26, 30, 40];
 
-const BasketItem = ({ name, price, imageUrl, size, type, count }) => {
+const BasketItem = ({ name, price, imageUrl, size, type, count, basketId }) => {
   const dispatch = useDispatch();
+
+  const incrementCount = () => {
+    dispatch(incrementCounter(basketId));
+  };
+  const decrementCount = () => {
+    dispatch(decrementCounter(basketId));
+  }
+  const deleteBasketItem = () => {
+    dispatch(removeItem(basketId));
+  }
+
   return (
     <div className="basket__item">
     <div className="basket__item-img">
@@ -17,10 +27,11 @@ const BasketItem = ({ name, price, imageUrl, size, type, count }) => {
     </div>
     <div className="basket__item-info">
       <h3>{name}</h3>
-      <p>{type} тесто, {sizes[size]} см.</p>
+      <p>{type} тесто, {size} см.</p>
     </div>
     <div className="basket__item-count">
-      <div className="button button--outline button--circle basket__item-count-minus">
+      <div className="button button--outline button--circle basket__item-count-minus"
+    onClick={decrementCount}>
         <svg
           width="10"
           height="10"
@@ -40,6 +51,7 @@ const BasketItem = ({ name, price, imageUrl, size, type, count }) => {
       </div>
       <b>{count}</b>
       <div className="button button--outline button--circle basket__item-count-plus"
+      onClick={incrementCount}
       >
         <svg
           width="10"
@@ -60,9 +72,11 @@ const BasketItem = ({ name, price, imageUrl, size, type, count }) => {
       </div>
     </div>
     <div className="basket__item-price">
-      <b>{price} ₽</b>
+      <b>{price * count} ₽</b>
     </div>
-    <div className="basket__item-remove">
+    <div className="basket__item-remove"
+    onClick={deleteBasketItem}
+    >
       <div className="button button--outline button--circle">
         <svg
           width="10"
