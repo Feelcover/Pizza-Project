@@ -11,10 +11,8 @@ const Pizza = ({ name, price, imageUrl, sizes, types, id }) => {
   const [activeSize, setActiveSize] = React.useState(0);
   const dispatch = useDispatch();
   const itemCounter = useSelector((state) =>
-    state.basketSlice.items.find((item) => item.id === id)
+    state.basketReducer.items.find((item) => item.name === name)
   );
-  const isCountAdded = itemCounter ? itemCounter.count : null;
-
   const addInBasket = () => {
     const item = {
       name,
@@ -74,7 +72,7 @@ const Pizza = ({ name, price, imageUrl, sizes, types, id }) => {
             />
           </svg>
           <span>Добавить</span>
-          {isCountAdded > 0 && <i>{isCountAdded}</i>}
+          {itemCounter && <i>✓</i>}
         </div>
       </div>
     </div>

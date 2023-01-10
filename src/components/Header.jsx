@@ -6,7 +6,7 @@ import Search from "./Search/Search";
 
 const Header = () => {
   const dispatch = useDispatch();
-  const { totalPrice, totalItems } = useSelector((state) => state.basketSlice);
+  const { totalPrice, totalItems } = useSelector((state) => state.basketReducer);
 
   return (
     <div className="header">

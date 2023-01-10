@@ -14,35 +14,39 @@ import {
   setUrlFilters,
 } from "../services/slices/filterSlice";
 import { useNavigate } from "react-router-dom";
+import { setPizzas } from "../services/slices/pizzasSlice";
 
 const Home = () => {
-  const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const { categoryId, sortType, currentPage, searchValue } = useSelector(
     (state) => state.filterReducer
   );
+  const items = useSelector((state)=> state.pizzaReducer.items)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isFirstRender = React.useRef(false);
   const isSearch = React.useRef(false);
 
-  const getItems = () => {
+  const getItems = async () => {
     const order = sortType.sort.includes("-") ? "asc" : "desc";
     const sortBy = sortType.sort.replace("-", "");
     const category = categoryId > 0 ? `category=${categoryId}` : "";
     const search = searchValue ? `&search=${searchValue}` : "";
     setIsLoading(true);
-    axios
-      .get(
+    try {
+      const res = await axios.get(
         `https://63a57314318b23efa793c24a.mockapi.io/Items?page=${currentPage}&limit=8&${category}&sortBy=${sortBy}&order=${order}${search}`
-      )
-      .then((res) => {
-        setItems(res.data);
-        setIsLoading(false);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+      );
+
+      dispatch(setPizzas(res.data));
+      setIsLoading(false);
+      window.scrollTo(0, 0);
+    } catch (error) {
+      console.log("Ошибка при запросе", error);
+      alert('Ошибка при получении пицц, попробуйте позже')
+    }finally{
+      setIsLoading(false);
+    }
   };
 
   React.useEffect(() => {
@@ -60,22 +64,21 @@ const Home = () => {
   }, []);
 
   React.useEffect(() => {
-   if (isFirstRender.current){
-    const queryString = QueryString.stringify(
-      {
-        sort: sortType.sort,
-        categoryId,
-        currentPage,
-      },
-      { addQueryPrefix: true }
-    );
-    navigate(queryString);
-   }
-   isFirstRender.current = true;
+    if (isFirstRender.current) {
+      const queryString = QueryString.stringify(
+        {
+          sort: sortType.sort,
+          categoryId,
+          currentPage,
+        },
+        { addQueryPrefix: true }
+      );
+      navigate(queryString);
+    }
+    isFirstRender.current = true;
   }, [categoryId, sortType, searchValue, currentPage]);
 
   React.useEffect(() => {
-    window.scrollTo(0, 0);
     if (!isSearch.current) {
       getItems();
     }
