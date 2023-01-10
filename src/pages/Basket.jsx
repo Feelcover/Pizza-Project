@@ -6,7 +6,7 @@ import { clearBasket } from "../services/slices/basketSlice"
 
 const Basket = () => {
   const dispatch = useDispatch();
-  const { totalPrice, items, totalItems } = useSelector((state) => state.basketSlice);
+  const { totalPrice, items, totalItems } = useSelector((state) => state.basketReducer);
   if (totalPrice) {
     return (
       <div className="container container--basket">

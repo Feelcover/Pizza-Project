@@ -21,7 +21,7 @@ const Home = () => {
   const { categoryId, sortType, currentPage, searchValue } = useSelector(
     (state) => state.filterReducer
   );
-  const items = useSelector((state)=> state.pizzaReducer.items)
+  const items = useSelector((state)=> state.pizzasReducer.items);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isFirstRender = React.useRef(false);
@@ -39,6 +39,7 @@ const Home = () => {
       );
 
       dispatch(setPizzas(res.data));
+      // setItems(res.data)
       setIsLoading(false);
       window.scrollTo(0, 0);
     } catch (error) {
