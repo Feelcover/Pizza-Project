@@ -14,39 +14,26 @@ import {
   setUrlFilters,
 } from "../services/slices/filterSlice";
 import { useNavigate } from "react-router-dom";
-import { setPizzas } from "../services/slices/pizzasSlice";
+import { fetchPizzas } from "../services/slices/pizzasSlice";
 
 const Home = () => {
-  const [isLoading, setIsLoading] = React.useState(true);
   const { categoryId, sortType, currentPage, searchValue } = useSelector(
     (state) => state.filterReducer
   );
-  const items = useSelector((state)=> state.pizzasReducer.items);
+  const {items, isLoading} = useSelector((state)=> state.pizzasReducer);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isFirstRender = React.useRef(false);
   const isSearch = React.useRef(false);
 
   const getItems = async () => {
-    const order = sortType.sort.includes("-") ? "asc" : "desc";
-    const sortBy = sortType.sort.replace("-", "");
-    const category = categoryId > 0 ? `category=${categoryId}` : "";
-    const search = searchValue ? `&search=${searchValue}` : "";
-    setIsLoading(true);
     try {
-      const res = await axios.get(
-        `https://63a57314318b23efa793c24a.mockapi.io/Items?page=${currentPage}&limit=8&${category}&sortBy=${sortBy}&order=${order}${search}`
-      );
-
-      dispatch(setPizzas(res.data));
-      // setItems(res.data)
-      setIsLoading(false);
+      dispatch(fetchPizzas({sortType, categoryId, currentPage, searchValue}));
       window.scrollTo(0, 0);
     } catch (error) {
       console.log("Ошибка при запросе", error);
       alert('Ошибка при получении пицц, попробуйте позже')
     }finally{
-      setIsLoading(false);
     }
   };
 
