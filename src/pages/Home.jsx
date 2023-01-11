@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
 import QueryString from "qs";
 import { Loader } from "../components/Pizza/Loader";
 import Pizza from "../components/Pizza/Pizza";
@@ -15,6 +14,7 @@ import {
 } from "../services/slices/filterSlice";
 import { useNavigate } from "react-router-dom";
 import { fetchPizzas } from "../services/slices/pizzasSlice";
+import FetchPizzasError from "../components/FetchPizzasError";
 
 const Home = () => {
   const { categoryId, sortType, currentPage, searchValue } = useSelector(
@@ -25,17 +25,6 @@ const Home = () => {
   const navigate = useNavigate();
   const isFirstRender = React.useRef(false);
   const isSearch = React.useRef(false);
-
-  const getItems = async () => {
-    try {
-      dispatch(fetchPizzas({sortType, categoryId, currentPage, searchValue}));
-      window.scrollTo(0, 0);
-    } catch (error) {
-      console.log("Ошибка при запросе", error);
-      alert('Ошибка при получении пицц, попробуйте позже')
-    }finally{
-    }
-  };
 
   React.useEffect(() => {
     if (window.location.search) {
@@ -68,10 +57,13 @@ const Home = () => {
 
   React.useEffect(() => {
     if (!isSearch.current) {
-      getItems();
+      dispatch(fetchPizzas({sortType, categoryId, currentPage, searchValue}));
+      window.scrollTo(0, 0);
     }
     isSearch.current = false;
   }, [categoryId, sortType, searchValue, currentPage]);
+
+
   const searchFilter = (arr) => {
     return arr.filter((e) => e.name.toLowerCase().includes(searchValue));
   };
@@ -94,13 +86,14 @@ const Home = () => {
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
-        {isLoading
-          ? [...new Array(8)].map((arr, i) => <Loader key={i} />)
-          : searchFilter(items).map((item) => (
+        {isLoading === "pending" && [...new Array(8)].map((arr, i) => <Loader key={i} />)}
+        {isLoading === "success" && searchFilter(items).map((item) => (
               <Pizza key={item.id} {...item} />
             ))}
       </div>
-      <Pagination currentPage={currentPage} changePage={changePage} />
+      {isLoading === "error" && <FetchPizzasError/>}
+      {isLoading === "success" && <Pagination currentPage={currentPage} changePage={changePage} />}
+      
     </>
   );
 };

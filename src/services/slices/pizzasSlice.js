@@ -3,7 +3,7 @@ import axios from "axios";
 
 const initialState = {
   items: [],
-  isLoading: true,
+  isLoading: 'pending',
 };
 
 export const fetchPizzas = createAsyncThunk(
@@ -35,16 +35,16 @@ export const pizzasSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchPizzas.pending, (state) => {
       state.items = [];
-      state.isLoading = true;
-    }),
+      state.isLoading = 'pending';
+    });
     builder.addCase(fetchPizzas.fulfilled, (state, action) => {
       state.items = action.payload;
-      state.isLoading = false;
-    }),
+      state.isLoading = 'success';
+    });
     builder.addCase(fetchPizzas.rejected, (state) => {
       state.items = [];
-      state.isLoading = false;
-    })
+      state.isLoading = 'error';
+    });
   }
 });
 
