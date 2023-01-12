@@ -2,31 +2,30 @@ import React from "react";
 import imgSearch from "../../img/search.svg";
 import imgClose from "../../img/close.png";
 import styles from "./Search.module.scss";
-import { useDispatch } from "react-redux";
-import { setSearchValue } from "../../services/slices/filterSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { filterSelector, setSearchValue, setValue } from "../../services/slices/filterSlice";
 import debounce from "lodash.debounce";
 
 const Search = () => {
-  const [value, setValue] = React.useState("");
+  const {value} = useSelector(filterSelector);
   const dispatch = useDispatch();
   const inputRef = React.useRef();
 
   const onClear = () => {
     dispatch(setSearchValue(""));
-    setValue('');
+    dispatch(setValue(""));
     inputRef.current.focus();
   };
 
   const updateValueDelay = React.useCallback(
     debounce((e) => {
-      console.log(e);
       dispatch(setSearchValue(e));
-    }, 450)
-    ,[]
+    }, 450),
+    []
   );
 
   const onChange = (evt) => {
-    setValue(evt.target.value);
+    dispatch(setValue(evt.target.value));
     updateValueDelay(evt.target.value);
   };
 

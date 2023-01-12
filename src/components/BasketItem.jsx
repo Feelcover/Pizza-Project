@@ -2,17 +2,17 @@ import { useDispatch } from 'react-redux';
 import { removeItem, decrementCounter, incrementCounter } from '../services/slices/basketSlice';
 
 
-const BasketItem = ({ name, price, imageUrl, size, type, count, basketItemName}) => {
+const BasketItem = ({ name, price, imageUrl, size, type, count, itemParams}) => {
   const dispatch = useDispatch();
 
   const incrementCount = () => {
-    dispatch(incrementCounter(basketItemName));
+    dispatch(incrementCounter(itemParams));
   };
   const decrementCount = () => {
-    dispatch(decrementCounter(basketItemName));
+    dispatch(decrementCounter(itemParams));
   }
   const deleteBasketItem = () => {
-    dispatch(removeItem(basketItemName));
+    dispatch(removeItem(itemParams));
   }
   return (
     <div className="basket__item">

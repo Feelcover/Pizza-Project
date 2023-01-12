@@ -2,11 +2,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import BasketItem from "../components/BasketItem";
 import BasketEmpty from "../components/BasketEmpty";
-import { clearBasket } from "../services/slices/basketSlice"
+import { basketSelector, clearBasket } from "../services/slices/basketSlice"
 
 const Basket = () => {
   const dispatch = useDispatch();
-  const { totalPrice, items, totalItems } = useSelector((state) => state.basketReducer);
+  const { totalPrice, items, totalItems } = useSelector(basketSelector);
   if (totalPrice) {
     return (
       <div className="container container--basket">

@@ -3,10 +3,11 @@ import logo from "../img/pizza-logo.svg";
 import { setSearchValue } from "../services/slices/filterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Search from "./Search/Search";
+import { basketSelector } from "../services/slices/basketSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
-  const { totalPrice, totalItems } = useSelector((state) => state.basketReducer);
+  const { totalPrice, totalItems } = useSelector(basketSelector);
 
   return (
     <div className="header">

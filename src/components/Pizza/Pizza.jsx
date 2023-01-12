@@ -1,18 +1,17 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem } from "../../services/slices/basketSlice";
-
+import {
+  addItem,
+  isItemCountSelector,
+} from "../../services/slices/basketSlice";
 
 export const pizzaTypes = ["тонкое", "традиционное"];
 
 const Pizza = ({ name, price, imageUrl, sizes, types, id }) => {
-
   const [activeType, setActiveType] = React.useState(0);
   const [activeSize, setActiveSize] = React.useState(0);
   const dispatch = useDispatch();
-  const itemCounter = useSelector((state) =>
-    state.basketReducer.items.find((item) => item.name === name)
-  );
+  const isItemCount = useSelector(isItemCountSelector(name));
   const addInBasket = () => {
     const item = {
       name,
@@ -21,6 +20,7 @@ const Pizza = ({ name, price, imageUrl, sizes, types, id }) => {
       type: pizzaTypes[activeType],
       size: sizes[activeSize],
       id,
+      itemParams: sizes[activeSize] + pizzaTypes[activeType] + id,
     };
     dispatch(addItem(item));
   };
@@ -72,7 +72,7 @@ const Pizza = ({ name, price, imageUrl, sizes, types, id }) => {
             />
           </svg>
           <span>Добавить</span>
-          {itemCounter && <i>✓</i>}
+          {isItemCount && <i>✓</i>}
         </div>
       </div>
     </div>

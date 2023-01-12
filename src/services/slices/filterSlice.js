@@ -9,6 +9,7 @@ const initialState = {
   currentPage: 1,
   searchValue: "",
   isOpened: false,
+  value: "",
 };
 
 export const filterSlice = createSlice({
@@ -35,8 +36,14 @@ export const filterSlice = createSlice({
       state.currentPage = Number(action.payload.currentPage);
       state.sortType = action.payload.sortProp;
     },
+    setValue:(state, action)=>{
+      state.value= action.payload;
+
+    }
   },
 });
+
+export const filterSelector = (state) => state.filterReducer;
 
 export const {
   setCategoryId,
@@ -44,7 +51,8 @@ export const {
   setCurrentPage,
   setSearchValue,
   setIsOpened,
-  setUrlFilters
+  setUrlFilters,
+  setValue
 } = filterSlice.actions;
 
 export default filterSlice.reducer;

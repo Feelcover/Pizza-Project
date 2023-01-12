@@ -19,24 +19,16 @@ const basketSlice = createSlice({
   initialState,
   reducers: {
     addItem: (state, action) => {
-      const repeatSize = state.items.find(
-        (item) => item.size === action.payload.size
-      );
-      const repeatType = state.items.find(
-        (item) => item.type === action.payload.type
-      );
-      const repeatId = state.items.find(
-        (item) => item.id === action.payload.id
+      const repeat = state.items.find(
+        (item) => item.itemParams === action.payload.itemParams,
       );
 
-      if (repeatSize && repeatType && repeatId) {
-        repeatSize.count++;
+      if (repeat) {
+        repeat.count++
       } else {
         state.items.push({
           ...action.payload,
           count: 1,
-          basketItemName:
-            action.payload.size + action.payload.type + action.payload.id,
         });
       }
 
@@ -44,7 +36,7 @@ const basketSlice = createSlice({
     },
     removeItem: (state, action) => {
       state.items = state.items.filter(
-        (item) => item.basketItemName !== action.payload
+        (item) => item.itemParams !== action.payload
       );
       calculate(state);
     },
@@ -54,7 +46,7 @@ const basketSlice = createSlice({
     },
     decrementCounter: (state, action) => {
       const item = state.items.find(
-        (item) => item.basketItemName === action.payload
+        (item) => item.itemParams === action.payload
       );
       if (item.count > 1) {
         item.count--;
@@ -63,13 +55,16 @@ const basketSlice = createSlice({
     },
     incrementCounter: (state, action) => {
       const repeat = state.items.find(
-        (item) => item.basketItemName === action.payload
+        (item) => item.itemParams === action.payload
       );
       repeat.count++;
       calculate(state);
     },
   },
 });
+
+export const isItemCountSelector = (name) => (state) => state.basketReducer.items.find((item) => item.name === name) 
+export const basketSelector = (state) => state.basketReducer;
 
 export const {
   addItem,
