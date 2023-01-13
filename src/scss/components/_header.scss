@@ -1,4 +1,4 @@
-@import '../variables';
+@import "../variables";
 
 .header {
   border-bottom: 1px solid $gray-line;
@@ -21,7 +21,7 @@
   &__logo {
     display: flex;
     transition: all 0.2s ease-in-out;
-    &:hover{
+    &:hover {
       opacity: 0.85;
     }
     img {

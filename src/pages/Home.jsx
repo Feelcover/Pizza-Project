@@ -13,7 +13,7 @@ import {
   setUrlFilters,
   filterSelector,
 } from "../services/slices/filterSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { fetchPizzas, pizzasSelector } from "../services/slices/pizzasSlice";
 import FetchPizzasError from "../components/FetchPizzasError";
 
@@ -88,7 +88,11 @@ const Home = () => {
         {isLoading === "pending" &&
           [...new Array(8)].map((arr, i) => <Loader key={i} />)}
         {isLoading === "success" &&
-          searchFilter(items).map((item) => <Pizza key={item.id} {...item} />)}
+          searchFilter(items).map((item) => (
+            <Link to={`/pizza/${item.id}`} key={item.id}>
+              <Pizza {...item} />
+            </Link>
+          ))}
       </div>
       {isLoading === "error" && <FetchPizzasError />}
       {isLoading === "success" && (

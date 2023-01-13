@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../img/pizza-logo.svg";
 import { setSearchValue } from "../services/slices/filterSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +8,7 @@ import { basketSelector } from "../services/slices/basketSlice";
 const Header = () => {
   const dispatch = useDispatch();
   const { totalPrice, totalItems } = useSelector(basketSelector);
+  const location = useLocation();
 
   return (
     <div className="header">
@@ -24,11 +25,16 @@ const Header = () => {
             </div>
           </div>
         </Link>
-        <Search />
+        {location.pathname !== "/Basket" && <Search />}
         <div className="header__basket">
-          <Link to="/Basket" className="button button--basket">
+          <Link
+            to="/Basket"
+            className={`button button--basket ${
+              location.pathname === "/Basket" && "button-active"
+            }`}
+          >
             <span>{totalPrice} ₽</span>
-            <div className="button__delimiter"></div>
+            <div className="button__separation"></div>
             <svg
               width="18"
               height="18"
