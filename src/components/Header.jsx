@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import logo from "../img/pizza-logo.svg";
-import { setSearchValue } from "../services/slices/filterSlice";
+import { setSearchValue, setCategoryId, setSortType, setCurrentPage } from "../services/slices/filterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Search from "./Search/Search";
 import { basketSelector } from "../services/slices/basketSlice";
@@ -10,13 +10,23 @@ const Header = () => {
   const { totalPrice, totalItems } = useSelector(basketSelector);
   const location = useLocation();
 
+  const resetFilters = () => {
+    dispatch(setSearchValue(""));
+    dispatch(setSortType({
+      name: "популярности",
+      sort: "rating",
+    }));
+    dispatch(setCategoryId(0));
+    dispatch(setCurrentPage(1));
+  }
+
   return (
     <div className="header">
       <div className="container">
         <Link to="/">
           <div
             className="header__logo"
-            onClick={() => dispatch(setSearchValue(""))}
+            onClick={resetFilters}
           >
             <img width="38" src={logo} alt="Pizza logo" />
             <div>

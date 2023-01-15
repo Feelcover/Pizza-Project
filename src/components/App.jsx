@@ -1,26 +1,23 @@
 import { Routes, Route } from "react-router-dom";
-import Header from "./Header";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Home from "../pages/Home";
 import Basket from "../pages/Basket";
 import "../scss/app.scss";
 import PizzaPage from "../pages/PizzaPage/PizzaPage";
+import Main from "./Main";
 
 const App = () => {
   return (
-    <div className="wrapper">
-      <Header />
-      <div className="content">
-        <div className="container">
+
           <Routes>
+            <Route path="/" element={<Main />} >
             <Route path="/" element={<Home />} />
             <Route path="/Basket" element={<Basket />} />
             <Route path="/pizza/:id" element={<PizzaPage />} />
             <Route path="*" element={<ErrorPage />} />
+            </Route>
           </Routes>
-        </div>
-      </div>
-    </div>
+
   );
 };
 

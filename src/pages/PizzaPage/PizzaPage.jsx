@@ -1,14 +1,17 @@
 import axios from "axios";
 import React, { useTransition } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from "./PizzaPage.module.scss";
 import { pizzaTypes } from "../../components/Pizza/Pizza";
 
 const PizzaPage = () => {
   const [item, setItem] = React.useState({});
+
   const { id } = useParams();
   const sizes = item.sizes;
   const types = item.types;
+  const navigate = useNavigate();
+
   React.useEffect(() => {
     async function fetchItem() {
       try {
@@ -18,9 +21,10 @@ const PizzaPage = () => {
         setItem(res.data);
       } catch (error) {
         console.log(error);
+        navigate('/')
       }
     }
-      fetchItem();    
+    fetchItem();
   }, []);
 
   if (!item.id) {

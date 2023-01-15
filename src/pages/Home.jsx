@@ -71,12 +71,17 @@ const Home = () => {
     dispatch(setCurrentPage(num));
   };
 
+  const setCategoryIdResetCurrentPage = (id) => {
+    dispatch(setCategoryId(id));
+    dispatch(setCurrentPage(1));
+  }
+
   return (
     <>
       <div className="content__top">
         <Categories
           value={categoryId}
-          onClickCategory={(id) => dispatch(setCategoryId(id))}
+          onClickCategory={setCategoryIdResetCurrentPage}
         />
         <Sort
           value={sortType}
