@@ -26,7 +26,7 @@ const Sort = ({ value, onClickSort }) => {
       }
     }
     const handleCloseOutsideClick = (evt) => {
-      if (!evt.path.includes(sortRef.current)) {
+      if (!sortRef.current.contains(evt.target)) {
         dispatch(setIsOpened(false));
       }
     };
