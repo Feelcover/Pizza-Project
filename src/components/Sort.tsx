@@ -1,6 +1,7 @@
-import React from "react";
+import React, { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsOpened } from "../services/slices/filterSlice";
+import { setIsOpened, setSortType } from "../services/slices/filterSlice";
+import { RootState, TSort, TSortPopupProps } from "../utils/types";
 
 export const sortArr = [
   { name: "популярности", sort: "rating" },
@@ -9,24 +10,22 @@ export const sortArr = [
   { name: "алфавиту", sort: "title" },
 ];
 
-const Sort = ({ value, onClickSort }) => {
-  const isOpened = useSelector((action) => action.filterReducer.isOpened);
+const Sort:FC<TSortPopupProps> = ({ value }) => {  
+  const isOpened = useSelector((action:RootState) => action.filterReducer.isOpened);
   const dispatch = useDispatch();
-  const sortRef = React.useRef();
-
-  const selectedClose = (item) => {
-    onClickSort(item);
+  const sortRef = React.useRef<HTMLDivElement>(null);
+  const selectedClose = (value:TSort) => {
+    dispatch(setSortType(value));
     dispatch(setIsOpened(false));
   };
-
   React.useEffect(() => {
-    function handleEscKeydown(evt) {
+    function handleEscKeydown(evt:KeyboardEvent) {
       if (evt.key === "Escape") {
         dispatch(setIsOpened(false));
       }
     }
-    const handleCloseOutsideClick = (evt) => {
-      if (!sortRef.current.contains(evt.target)) {
+    const handleCloseOutsideClick = (evt:Event) => {
+      if (!sortRef.current?.contains(evt.target as Element)) {
         dispatch(setIsOpened(false));
       }
     };

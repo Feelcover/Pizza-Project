@@ -1,9 +1,11 @@
+import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { removeItem, decrementCounter, incrementCounter } from '../services/slices/basketSlice';
+import { TBasketItem } from '../utils/types';
 
 
-const BasketItem = ({ name, price, imageUrl, size, type, count, itemParams}) => {
-  const dispatch = useDispatch();
+const BasketItem:FC<TBasketItem> = ({ name, price, imageUrl, size, type, count, itemParams}) => {
+  const dispatch = useDispatch();  
 
   const incrementCount = () => {
     dispatch(incrementCounter(itemParams));

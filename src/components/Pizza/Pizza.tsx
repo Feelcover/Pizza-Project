@@ -1,18 +1,20 @@
-import React from "react";
+import React, { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   addItem,
   isItemCountSelector,
 } from "../../services/slices/basketSlice";
+import { TPizza } from "../../utils/types";
 
 export const pizzaTypes = ["тонкое", "традиционное"];
 
-const Pizza = ({ name, price, imageUrl, sizes, types, id }) => {
+const Pizza: FC<TPizza> = ({ name, price, imageUrl, sizes, types, id }) => {
   const [activeType, setActiveType] = React.useState(0);
   const [activeSize, setActiveSize] = React.useState(0);
   const dispatch = useDispatch();
   const isItemCount = useSelector(isItemCountSelector(name));
+
   const addInBasket = () => {
     const item = {
       name,
@@ -29,8 +31,8 @@ const Pizza = ({ name, price, imageUrl, sizes, types, id }) => {
   return (
     <div className="pizza-block">
       <Link to={`/pizza/${id}`}>
-      <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
-      <h4 className="pizza-block__title">{name}</h4>
+        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+        <h4 className="pizza-block__title">{name}</h4>
       </Link>
       <div className="pizza-block__selector">
         <ul>

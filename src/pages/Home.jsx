@@ -7,9 +7,7 @@ import Sort, { sortArr } from "../components/Sort";
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination/Pagination";
 import {
-  setCategoryId,
   setSortType,
-  setCurrentPage,
   setUrlFilters,
   filterSelector,
 } from "../services/slices/filterSlice";
@@ -67,25 +65,14 @@ const Home = () => {
     return arr.filter((e) => e.name.toLowerCase().includes(searchValue));
   };
 
-  const changePage = (num) => {
-    dispatch(setCurrentPage(num));
-  };
-
-  const setCategoryIdResetCurrentPage = (id) => {
-    dispatch(setCategoryId(id));
-    dispatch(setCurrentPage(1));
-  }
-
   return (
     <>
       <div className="content__top">
         <Categories
           value={categoryId}
-          onClickCategory={setCategoryIdResetCurrentPage}
         />
         <Sort
           value={sortType}
-          onClickSort={(id) => dispatch(setSortType(id))}
         />
       </div>
       <h2 className="content__title">Все пиццы</h2>
@@ -95,12 +82,12 @@ const Home = () => {
         {isLoading === "success" &&
           searchFilter(items).map((item) => (
             
-              <Pizza {...item} />
+              <Pizza key={item.id} {...item} />
           ))}
       </div>
       {isLoading === "error" && <FetchPizzasError />}
       {isLoading === "success" && (
-        <Pagination currentPage={currentPage} changePage={changePage} />
+        <Pagination currentPage={currentPage} />
       )}
     </>
   );
