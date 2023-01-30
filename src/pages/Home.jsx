@@ -94,9 +94,8 @@ const Home = () => {
           [...new Array(8)].map((arr, i) => <Loader key={i} />)}
         {isLoading === "success" &&
           searchFilter(items).map((item) => (
-            <Link to={`/pizza/${item.id}`} key={item.id}>
+            
               <Pizza {...item} />
-            </Link>
           ))}
       </div>
       {isLoading === "error" && <FetchPizzasError />}

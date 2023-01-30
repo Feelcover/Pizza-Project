@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   addItem,
   isItemCountSelector,
@@ -27,8 +28,10 @@ const Pizza = ({ name, price, imageUrl, sizes, types, id }) => {
 
   return (
     <div className="pizza-block">
+      <Link to={`/pizza/${id}`}>
       <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
       <h4 className="pizza-block__title">{name}</h4>
+      </Link>
       <div className="pizza-block__selector">
         <ul>
           {types.map((type, index) => (

@@ -8,16 +8,14 @@ import Main from "./Main";
 
 const App = () => {
   return (
-
-          <Routes>
-            <Route path="/" element={<Main />} >
-            <Route path="" element={<Home />} />
-            <Route path="Basket" element={<Basket />} />
-            <Route path="pizza/:id" element={<PizzaPage />} />
-            <Route path="*" element={<ErrorPage />} />
-            </Route>
-          </Routes>
-
+    <Routes>
+      <Route path="/" element={<Main />}>
+        <Route path="" element={<Home />} />
+        <Route path="Basket" element={<Basket />} />
+        <Route path="pizza/:id" element={<PizzaPage />} />
+        <Route path="*" element={<ErrorPage />} />
+      </Route>
+    </Routes>
   );
 };
 
