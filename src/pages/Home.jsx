@@ -6,12 +6,8 @@ import Pizza from "../components/Pizza/Pizza";
 import Sort, { sortArr } from "../components/Sort";
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination/Pagination";
-import {
-  setSortType,
-  setUrlFilters,
-  filterSelector,
-} from "../services/slices/filterSlice";
-import { Link, useNavigate } from "react-router-dom";
+import { setUrlFilters, filterSelector } from "../services/slices/filterSlice";
+import { useNavigate } from "react-router-dom";
 import { fetchPizzas, pizzasSelector } from "../services/slices/pizzasSlice";
 import FetchPizzasError from "../components/FetchPizzasError";
 
@@ -68,27 +64,18 @@ const Home = () => {
   return (
     <>
       <div className="content__top">
-        <Categories
-          value={categoryId}
-        />
-        <Sort
-          value={sortType}
-        />
+        <Categories value={categoryId} />
+        <Sort value={sortType} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
         {isLoading === "pending" &&
           [...new Array(8)].map((arr, i) => <Loader key={i} />)}
         {isLoading === "success" &&
-          searchFilter(items).map((item) => (
-            
-              <Pizza key={item.id} {...item} />
-          ))}
+          searchFilter(items).map((item) => <Pizza key={item.id} {...item} />)}
       </div>
       {isLoading === "error" && <FetchPizzasError />}
-      {isLoading === "success" && (
-        <Pagination currentPage={currentPage} />
-      )}
+      {isLoading === "success" && <Pagination currentPage={currentPage} />}
     </>
   );
 };

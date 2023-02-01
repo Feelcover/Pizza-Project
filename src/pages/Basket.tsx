@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import BasketItem from "../components/BasketItem";
 import BasketEmpty from "../components/BasketEmpty";
 import { basketSelector, clearBasket } from "../services/slices/basketSlice"
+import { FC } from "react";
+import { TBasketItem, TPizzaPageItem } from "../utils/types";
 
-const Basket = () => {
+const Basket:FC = () => {
   const dispatch = useDispatch();
   const { totalPrice, items, totalItems } = useSelector(basketSelector);
   if (totalPrice) {
@@ -87,7 +89,7 @@ const Basket = () => {
             </div>
           </div>
           <div className="content__items">
-            {items?.map((item, index) => (
+            {items?.map((item:TBasketItem, index:number) => (
               <BasketItem key={index} {...item} />
             ))}
           </div>

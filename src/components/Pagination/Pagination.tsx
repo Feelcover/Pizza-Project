@@ -21,7 +21,6 @@ const Pagination:FC<TPagination> = ({ currentPage }) => {
       pageCount={3}
       previousLabel="<-"
       forcePage={currentPage-1}
-      renderOnZeroPageCount={undefined}
     />
   );
 };

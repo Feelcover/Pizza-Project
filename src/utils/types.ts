@@ -38,3 +38,14 @@ export type TSort = {
 export type TSortPopupProps = {
   value: TSort;
 };
+
+export type TPizzaPageItem = {
+  category: number;
+  id: number;
+  imageUrl: string;
+  name: string;
+  price: number;
+  sizes: number[];
+  types: number[];
+  }
+  

@@ -1,15 +1,14 @@
 import axios from "axios";
-import React, { useTransition } from "react";
+import React, { FC, useTransition } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from "./PizzaPage.module.scss";
 import { pizzaTypes } from "../../components/Pizza/Pizza";
+import { TPizzaPageItem } from "../../utils/types";
 
-const PizzaPage = () => {
-  const [item, setItem] = React.useState({});
 
+const PizzaPage:FC = () => {
+  const [item, setItem] = React.useState<TPizzaPageItem>();
   const { id } = useParams();
-  const sizes = item.sizes;
-  const types = item.types;
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -27,7 +26,7 @@ const PizzaPage = () => {
     fetchItem();
   }, []);
 
-  if (!item.id) {
+  if (!item) {
     return <div className={styles.loader} />;
   } else {
     return (
@@ -36,13 +35,13 @@ const PizzaPage = () => {
         <h2>{item.name}</h2>
         <h3>
           Доступные размеры:{" "}
-          {sizes?.map((item, index) => (
+          {item.sizes.map((item, index) => (
             <p key={index}>{item} см.</p>
           ))}
         </h3>
         <h3>
           Доступное тесто:{" "}
-          {types?.map((item, index) => (
+          {item.types.map((item, index) => (
             <p key={index}>{pizzaTypes[item]}</p>
           ))}
         </h3>
