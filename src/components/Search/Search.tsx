@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import imgSearch from "../../img/search.svg";
 import imgClose from "../../img/close.png";
 import styles from "./Search.module.scss";
@@ -28,7 +28,7 @@ const Search = () => {
     []
   );
 
-  const onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (evt: ChangeEvent<HTMLInputElement>) => {
     dispatch(setValue(evt.target.value));
     updateValueDelay(evt.target.value);
   };

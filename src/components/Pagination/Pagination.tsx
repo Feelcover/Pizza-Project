@@ -2,13 +2,12 @@ import { useDispatch } from "react-redux";
 import ReactPaginate from "react-paginate";
 import { setCurrentPage } from "../../services/slices/filterSlice";
 import { FC } from "react";
-import styles from "./Pagination.module.scss"
+import styles from "./Pagination.module.scss";
 import { TPagination } from "../../utils/types";
 
-
-const Pagination:FC<TPagination> = ({ currentPage }) => {
-  const dispatch = useDispatch()
-  const changePage = (num:number) => {
+const Pagination: FC<TPagination> = ({ currentPage }) => {
+  const dispatch = useDispatch();
+  const changePage = (num: number) => {
     dispatch(setCurrentPage(num));
   };
   return (
@@ -20,7 +19,7 @@ const Pagination:FC<TPagination> = ({ currentPage }) => {
       pageRangeDisplayed={8}
       pageCount={3}
       previousLabel="<-"
-      forcePage={currentPage-1}
+      forcePage={currentPage - 1}
     />
   );
 };

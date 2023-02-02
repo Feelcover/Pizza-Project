@@ -3,11 +3,11 @@ import React, { FC, useTransition } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from "./PizzaPage.module.scss";
 import { pizzaTypes } from "../../components/Pizza/Pizza";
-import { TPizzaPageItem } from "../../utils/types";
+import { TPizzaItem } from "../../utils/types";
 
 
 const PizzaPage:FC = () => {
-  const [item, setItem] = React.useState<TPizzaPageItem>();
+  const [item, setItem] = React.useState<TPizzaItem>();
   const { id } = useParams();
   const navigate = useNavigate();
 

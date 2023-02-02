@@ -1,7 +1,8 @@
 import React, { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsOpened, setSortType } from "../services/slices/filterSlice";
-import { RootState, TSort, TSortPopupProps } from "../utils/types";
+import { TSort, TSortPopupProps } from "../utils/types";
+import { RootState } from "../services/store";
 
 export const sortArr:TSort[] = [
   { name: "популярности", sort: "rating" },

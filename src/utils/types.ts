@@ -1,7 +1,3 @@
-import { store } from "../services/store";
-export type RootState = ReturnType<typeof store.getState>;
-
-
 export type TPizza = {
   name: string;
   price: number;
@@ -21,14 +17,13 @@ export type TBasketItem = {
   imageUrl: string;
   size: number;
   type: number;
-  count:number;
+  count: number;
   itemParams: string;
 };
 
-export type TCategories={
-  value:number
-}
-
+export type TCategories = {
+  value: number;
+};
 
 export type TSort = {
   name: string;
@@ -39,7 +34,7 @@ export type TSortPopupProps = {
   value: TSort;
 };
 
-export type TPizzaPageItem = {
+export type TPizzaItem = {
   category: number;
   id: number;
   imageUrl: string;
@@ -47,5 +42,17 @@ export type TPizzaPageItem = {
   price: number;
   sizes: number[];
   types: number[];
-  }
-  
+};
+
+export type SearchPizzaProps = {
+  sortType: sortType;
+  order?: string;
+  categoryId: number;
+  searchValue: string;
+  currentPage: number;
+};
+
+export type sortType = {
+  name: string;
+  sort: string;
+};

@@ -1,6 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 
-const initialState = {
+interface FilterInitialState {
+  categoryId: number;
+  sortType: { name: string; sort: string };
+  currentPage: number;
+  searchValue: string;
+  isOpened: boolean;
+  value: string;
+}
+
+const initialState: FilterInitialState = {
   categoryId: 0,
   sortType: {
     name: "популярности",
@@ -31,19 +41,18 @@ export const filterSlice = createSlice({
     setIsOpened: (state, action) => {
       state.isOpened = action.payload;
     },
-    setUrlFilters: (state, action)=>{
+    setUrlFilters: (state, action) => {
       state.categoryId = Number(action.payload.categoryId);
       state.currentPage = Number(action.payload.currentPage);
       state.sortType = action.payload.sortProp;
     },
-    setValue:(state, action)=>{
-      state.value= action.payload;
-
-    }
+    setValue: (state, action) => {
+      state.value = action.payload;
+    },
   },
 });
 
-export const filterSelector = (state) => state.filterReducer;
+export const filterSelector = (state: RootState) => state.filterReducer;
 
 export const {
   setCategoryId,
@@ -52,7 +61,7 @@ export const {
   setSearchValue,
   setIsOpened,
   setUrlFilters,
-  setValue
+  setValue,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;

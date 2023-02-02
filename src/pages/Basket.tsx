@@ -4,7 +4,7 @@ import BasketItem from "../components/BasketItem";
 import BasketEmpty from "../components/BasketEmpty";
 import { basketSelector, clearBasket } from "../services/slices/basketSlice"
 import { FC } from "react";
-import { TBasketItem, TPizzaPageItem } from "../utils/types";
+import { TBasketItem } from "../utils/types";
 
 const Basket:FC = () => {
   const dispatch = useDispatch();
