@@ -2,11 +2,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import BasketItem from "../components/BasketItem";
 import BasketEmpty from "../components/BasketEmpty";
-import { basketSelector, clearBasket } from "../services/slices/basketSlice"
+import { basketSelector, clearBasket } from "../services/slices/basketSlice";
 import { FC } from "react";
 import { TBasketItem } from "../utils/types";
 
-const Basket:FC = () => {
+const Basket: FC = () => {
   const dispatch = useDispatch();
   const { totalPrice, items, totalItems } = useSelector(basketSelector);
   if (totalPrice) {
@@ -46,8 +46,10 @@ const Basket:FC = () => {
               </svg>
               Корзина
             </h2>
-            <div className="basket__clear"
-            onClick={()=> dispatch(clearBasket())}>
+            <div
+              className="basket__clear"
+              onClick={() => dispatch(clearBasket())}
+            >
               <svg
                 width="20"
                 height="20"
@@ -89,7 +91,7 @@ const Basket:FC = () => {
             </div>
           </div>
           <div className="content__items">
-            {items?.map((item:TBasketItem, index:number) => (
+            {items?.map((item: TBasketItem, index: number) => (
               <BasketItem key={index} {...item} />
             ))}
           </div>

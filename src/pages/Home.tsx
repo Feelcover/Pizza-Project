@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useAppDispatch } from "../services/store";
 import QueryString from "qs";
 import { Loader } from "../components/Pizza/Loader";
@@ -13,11 +13,11 @@ import { fetchPizzas, pizzasSelector } from "../services/slices/pizzasSlice";
 import FetchPizzasError from "../components/FetchPizzasError";
 import { TPizzaItem } from "../utils/types";
 
-const Home:FC = () => {
+const Home: FC = () => {
   const { categoryId, sortType, currentPage, searchValue } =
     useSelector(filterSelector);
-    console.log(categoryId);
-    
+  console.log(categoryId);
+
   const { items, isLoading } = useSelector(pizzasSelector);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ const Home:FC = () => {
     isSearch.current = false;
   }, [categoryId, sortType, searchValue, currentPage]);
 
-  const searchFilter = (arr:TPizzaItem[]) => {
+  const searchFilter = (arr: TPizzaItem[]) => {
     return arr.filter((e) => e.name.toLowerCase().includes(searchValue));
   };
 
