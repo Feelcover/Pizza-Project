@@ -16,8 +16,6 @@ import { TPizzaItem } from "../utils/types";
 const Home: FC = () => {
   const { categoryId, sortType, currentPage, searchValue } =
     useSelector(filterSelector);
-  console.log(categoryId);
-
   const { items, isLoading } = useSelector(pizzasSelector);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

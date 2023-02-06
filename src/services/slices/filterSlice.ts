@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { SortType } from "../../utils/types";
 import { RootState } from "../store";
 
 interface FilterInitialState {
   categoryId: number;
-  sortType: { name: string; sort: string };
+  sortType: SortType;
   currentPage: number;
   searchValue: string;
   isOpened: boolean;

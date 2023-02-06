@@ -3,15 +3,19 @@ import axios from "axios";
 import { SearchPizzaProps, TPizzaItem } from "../../utils/types";
 import { RootState } from "../store";
 
+enum IsLoading {
+  PENDING = "pending",
+  SUCCESS = "success",
+  ERROR = "success",
+}
 interface PizzaInitialState {
-  items:TPizzaItem[];
-  isLoading:string;
+  items: TPizzaItem[];
+  isLoading: IsLoading;
 }
 
-const initialState:PizzaInitialState = {
+const initialState: PizzaInitialState = {
   items: [],
-  isLoading: "pending",
-
+  isLoading: IsLoading.PENDING,
 };
 
 export const fetchPizzas = createAsyncThunk<TPizzaItem[], SearchPizzaProps>(
@@ -22,7 +26,7 @@ export const fetchPizzas = createAsyncThunk<TPizzaItem[], SearchPizzaProps>(
     const order = sortType.sort.includes("-") ? "asc" : "desc";
     const sortBy = sortType.sort.replace("-", "");
     const search = searchValue ? `&search=${searchValue}` : "";
-    const res = await axios.get(
+    const res = await axios.get<TPizzaItem[]>(
       `https://63a57314318b23efa793c24a.mockapi.io/Items?page=${currentPage}&limit=8&${category}&sortBy=${sortBy}&order=${order}${search}`
     );
     return res.data;
@@ -33,7 +37,7 @@ export const pizzasSlice = createSlice({
   name: "pizzas",
   initialState,
   reducers: {
-    setPizzas: (state, action:PayloadAction<TPizzaItem[]>) => {
+    setPizzas: (state, action) => {
       state.items = action.payload;
     },
     setIsLoading: (state, action) => {
@@ -43,20 +47,20 @@ export const pizzasSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchPizzas.pending, (state) => {
       state.items = [];
-      state.isLoading = "pending";
+      state.isLoading = IsLoading.PENDING;
     });
     builder.addCase(fetchPizzas.fulfilled, (state, action) => {
       state.items = action.payload;
-      state.isLoading = "success";
+      state.isLoading = IsLoading.SUCCESS;
     });
     builder.addCase(fetchPizzas.rejected, (state) => {
       state.items = [];
-      state.isLoading = "error";
+      state.isLoading = IsLoading.ERROR;
     });
   },
 });
 
-export const pizzasSelector = (state:RootState) => state.pizzasReducer;
+export const pizzasSelector = (state: RootState) => state.pizzasReducer;
 
 export const { setPizzas, setIsLoading } = pizzasSlice.actions;
 

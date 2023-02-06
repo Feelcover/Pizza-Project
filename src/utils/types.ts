@@ -45,14 +45,14 @@ export type TPizzaItem = {
 };
 
 export type SearchPizzaProps = {
-  sortType: sortType;
+  sortType: SortType;
   order?: string;
   categoryId: number;
   searchValue: string;
   currentPage: number;
 };
 
-export type sortType = {
+export type SortType = {
   name: string;
-  sort: string;
+  sort: "rating" | "price" |"-price"|"title";
 };
