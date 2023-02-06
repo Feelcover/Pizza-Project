@@ -9,7 +9,7 @@ import Categories from "../components/Categories";
 import Pagination from "../components/Pagination/Pagination";
 import { setUrlFilters, filterSelector } from "../services/slices/filterSlice";
 import { useNavigate } from "react-router-dom";
-import { fetchPizzas, pizzasSelector } from "../services/slices/pizzasSlice";
+import { fetchPizzas, IsLoading, pizzasSelector } from "../services/slices/pizzasSlice";
 import FetchPizzasError from "../components/FetchPizzasError";
 import { TPizzaItem } from "../utils/types";
 
@@ -76,8 +76,8 @@ const Home: FC = () => {
         {isLoading === "success" &&
           searchFilter(items).map((item) => <Pizza key={item.id} {...item} />)}
       </div>
-      {isLoading === "error" && <FetchPizzasError />}
-      {isLoading === "success" && <Pagination currentPage={currentPage} />}
+      {isLoading === IsLoading.ERROR && <FetchPizzasError />}
+      {isLoading === IsLoading.SUCCESS && <Pagination currentPage={currentPage} />}
     </>
   );
 };

@@ -3,7 +3,7 @@ import axios from "axios";
 import { SearchPizzaProps, TPizzaItem } from "../../utils/types";
 import { RootState } from "../store";
 
-enum IsLoading {
+export enum IsLoading {
   PENDING = "pending",
   SUCCESS = "success",
   ERROR = "success",
