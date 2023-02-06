@@ -30,8 +30,9 @@ const BasketItem:FC<TBasketItem> = ({ name, price, imageUrl, size, type, count, 
       <p>{type} тесто, {size} см.</p>
     </div>
     <div className="basket__item-count">
-      <div className="button button--outline button--circle basket__item-count-minus"
-    onClick={decrementCount}>
+      <button className="button button--outline button--circle basket__item-count-minus"
+          disabled={count === 1}
+          onClick={decrementCount} >
         <svg
           width="10"
           height="10"
@@ -48,7 +49,7 @@ const BasketItem:FC<TBasketItem> = ({ name, price, imageUrl, size, type, count, 
             fill="#EB5A1E"
           />
         </svg>
-      </div>
+      </button>
       <b>{count}</b>
       <div className="button button--outline button--circle basket__item-count-plus"
       onClick={incrementCount}
@@ -77,7 +78,7 @@ const BasketItem:FC<TBasketItem> = ({ name, price, imageUrl, size, type, count, 
     <div className="basket__item-remove"
     onClick={deleteBasketItem}
     >
-      <div className="button button--outline button--circle">
+      <button className="button button--outline button--circle">
         <svg
           width="10"
           height="10"
@@ -94,7 +95,7 @@ const BasketItem:FC<TBasketItem> = ({ name, price, imageUrl, size, type, count, 
             fill="#EB5A1E"
           />
         </svg>
-      </div>
+      </button>
     </div>
   </div>
   )

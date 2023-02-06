@@ -6,7 +6,7 @@ import { RootState } from "../store";
 export enum IsLoading {
   PENDING = "pending",
   SUCCESS = "success",
-  ERROR = "success",
+  ERROR = "error",
 }
 interface PizzaInitialState {
   items: TPizzaItem[];
