@@ -1,26 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getBasketFromStorage } from "../../utils/getBasketFromStorage";
+import { calculate } from "../../utils/getTotalCalculate";
 import { TBasketItem } from "../../utils/types";
 import { RootState } from "../store";
 
-interface BasketInitialState {
+export interface BasketInitialState {
   items: TBasketItem[];
   totalPrice: number;
   totalItems: number;
 }
 
+const basket = getBasketFromStorage();
+
 const initialState: BasketInitialState = {
-  items: [],
-  totalPrice: 0,
-  totalItems: 0,
+  items: basket.basketItems,
+  totalPrice: basket.totalPrice,
+  totalItems: basket.totalItems,
 };
 
-const calculate = (state: BasketInitialState) => {
-  state.totalPrice = state.items.reduce(
-    (sum, item) => item.price * item.count + sum,
-    0
-  );
-  state.totalItems = state.items.reduce((sum, item) => item.count + sum, 0);
-};
 
 const basketSlice = createSlice({
   name: "basket",

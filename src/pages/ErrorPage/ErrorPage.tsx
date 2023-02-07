@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import {Link} from "react-router-dom"
 import img404 from "../../img/404.jpg";
 import styles from "./ErrorPage.module.scss"

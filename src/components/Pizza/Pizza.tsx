@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
@@ -10,8 +10,8 @@ import { TPizza } from "../../utils/types";
 export const pizzaTypes = ["тонкое", "традиционное"];
 
 const Pizza: FC<TPizza> = ({ name, price, imageUrl, sizes, types, id }) => {
-  const [activeType, setActiveType] = React.useState(0);
-  const [activeSize, setActiveSize] = React.useState(0);
+  const [activeType, setActiveType] = useState(0);
+  const [activeSize, setActiveSize] = useState(0);
   const dispatch = useDispatch();
   const isItemCount = useSelector(isItemCountSelector(name));
 

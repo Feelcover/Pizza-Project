@@ -4,11 +4,13 @@ import { setSearchValue, setCategoryId, setSortType, setCurrentPage } from "../s
 import { useDispatch, useSelector } from "react-redux";
 import Search from "./Search/Search";
 import { basketSelector } from "../services/slices/basketSlice";
+import { useEffect, useRef } from "react";
 
 const Header = () => {
   const dispatch = useDispatch();
-  const { totalPrice, totalItems } = useSelector(basketSelector);
+  const { totalPrice, totalItems, items } = useSelector(basketSelector);
   const location = useLocation();
+  const isFirstRender = useRef(false);
 
   const resetFilters = () => {
     dispatch(setSearchValue(""));
@@ -19,6 +21,15 @@ const Header = () => {
     dispatch(setCategoryId(0));
     dispatch(setCurrentPage(1));
   }
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      const itemsJson = JSON.stringify(items);
+      localStorage.setItem("basket", itemsJson)
+    }
+    isFirstRender.current = true
+  }, [items])
+  
 
   return (
     <div className="header">

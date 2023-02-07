@@ -3,13 +3,24 @@ import { Link } from "react-router-dom";
 import BasketItem from "../components/BasketItem";
 import BasketEmpty from "../components/BasketEmpty";
 import { basketSelector, clearBasket } from "../services/slices/basketSlice";
-import { FC } from "react";
+import { FC, useRef, useState } from "react";
 import { TBasketItem } from "../utils/types";
+import SuccessBuy from "../components/SuccessBuy";
+
 
 const Basket: FC = () => {
+  const [isBuy, setIsBuy] = useState({isBuy:false, loader:false})
   const dispatch = useDispatch();
+  const isBuyClick = () => {
+    setIsBuy({...isBuy,loader: true })
+    setTimeout(() => {
+      setIsBuy({...isBuy,isBuy: true });
+      dispatch(clearBasket())
+    }, 1000);
+  };
+
   const { totalPrice, items, totalItems } = useSelector(basketSelector);
-  if (totalPrice) {
+  if (totalPrice && isBuy.isBuy === false) {
     return (
       <div className="container container--basket">
         <div className="basket">
@@ -129,16 +140,18 @@ const Basket: FC = () => {
 
                 <span>Вернуться назад</span>
               </Link>
-              <div className="button pay-btn">
-                <span>Оплатить сейчас</span>
-              </div>
+              <button className="button pay-btn" onClick={isBuyClick} disabled= {isBuy.loader}>
+                <span>{isBuy.loader ? "Подождите..." :"Оплатить сейчас"}</span>
+              </button>
             </div>
           </div>
         </div>
       </div>
     );
-  } else {
+  } else if (isBuy.isBuy === false) {
     return <BasketEmpty />;
+  } else {
+    return <SuccessBuy />;
   }
 };
 

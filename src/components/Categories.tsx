@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { setCategoryId, setCurrentPage } from "../services/slices/filterSlice";
 import { TCategories } from "../utils/types";
@@ -12,14 +12,13 @@ const categoriesArr = [
   "Закрытые",
 ];
 
-const Categories:FC<TCategories> = ({value}) => {
+const Categories:FC<TCategories> = memo(({value}) => {
   const dispatch = useDispatch();
 
-  const setCategoryIdResetCurrentPage = (index:number) => {
+  const setCategoryIdResetCurrentPage = useCallback((index:number) => {
     dispatch(setCategoryId(index));
     dispatch(setCurrentPage(1));
-  }
-  
+  }, [])
 
 
   return (
@@ -37,6 +36,6 @@ const Categories:FC<TCategories> = ({value}) => {
       </ul>
     </div>
   );
-};
+});
 
 export default Categories;

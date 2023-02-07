@@ -1,16 +1,14 @@
 import { Link } from "react-router-dom";
 import basketImg from "../img/empty-basket.png";
 
-const BasketEmpty = () => {
+const SuccessBuy = () => {
   return (
     <div className="basket basket--empty">
       <h2>
-        Корзина пуста <span>😕</span>
+        Покупка завершена
       </h2>
       <p>
-        Кажется вы ещё ничего не заказали.
-        <br />
-        Для того, чтобы заказать пиццу, перейдите на главную страницу.
+        Мы оформляем ваш заказ
       </p>
       <img src={basketImg} alt="Empty basket" />
       <Link to="/" className="button button--black">
@@ -20,4 +18,4 @@ const BasketEmpty = () => {
   );
 };
 
-export default BasketEmpty;
+export default SuccessBuy;

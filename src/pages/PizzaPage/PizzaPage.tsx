@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { FC, useTransition } from "react";
+import { FC, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from "./PizzaPage.module.scss";
 import { pizzaTypes } from "../../components/Pizza/Pizza";
@@ -7,11 +7,11 @@ import { TPizzaItem } from "../../utils/types";
 
 
 const PizzaPage:FC = () => {
-  const [item, setItem] = React.useState<TPizzaItem>();
+  const [item, setItem] = useState<TPizzaItem>();
   const { id } = useParams();
   const navigate = useNavigate();
 
-  React.useEffect(() => {
+  useEffect(() => {
     async function fetchItem() {
       try {
         const res = await axios.get(

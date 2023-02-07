@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import { ChangeEvent, useCallback, useRef } from "react";
 import imgSearch from "../../img/search.svg";
 import imgClose from "../../img/close.png";
 import styles from "./Search.module.scss";
@@ -13,7 +13,7 @@ import debounce from "lodash.debounce";
 const Search = () => {
   const { value } = useSelector(filterSelector);
   const dispatch = useDispatch();
-  const inputRef = React.useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const onClear = () => {
     dispatch(setSearchValue(""));
@@ -21,7 +21,7 @@ const Search = () => {
     inputRef.current?.focus();
   };
 
-  const updateValueDelay = React.useCallback(
+  const updateValueDelay = useCallback(
     debounce((e:string) => {
       dispatch(setSearchValue(e));
     }, 450),

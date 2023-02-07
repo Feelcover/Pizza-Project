@@ -239,6 +239,7 @@ body {
         &:disabled {
           opacity: 0.4;
           border-color: #787878;
+          cursor: default;
 
           &:active {
             transform: none;
@@ -369,6 +370,11 @@ body {
         font-weight: 600;
         width: 210px;
         padding: 16px;
+        &:disabled{
+          border-color: #dddddd;
+          background-color: lighten($color: #fe5f1e, $amount: 10);
+          transform: none;
+        }
       }
     }
   }

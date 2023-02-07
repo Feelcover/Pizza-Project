@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC, memo, useCallback, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsOpened, setSortType } from "../services/slices/filterSlice";
 import { TSort, TSortPopupProps } from "../utils/types";
@@ -11,17 +11,17 @@ export const sortArr:TSort[] = [
   { name: "алфавиту", sort: "title" },
 ];
 
-const Sort: FC<TSortPopupProps> = ({ value }) => {
+const Sort: FC<TSortPopupProps> = memo(({ value }) => {
   const isOpened = useSelector(
     (action: RootState) => action.filterReducer.isOpened
   );
   const dispatch = useDispatch();
-  const sortRef = React.useRef<HTMLDivElement>(null);
-  const selectedClose = (value: TSort) => {
+  const sortRef = useRef<HTMLDivElement>(null);
+  const selectedClose = useCallback((value: TSort) => {
     dispatch(setSortType(value));
     dispatch(setIsOpened(false));
-  };
-  React.useEffect(() => {
+  }, []);
+  useEffect(() => {
     function handleEscKeydown(evt: KeyboardEvent) {
       if (evt.key === "Escape") {
         dispatch(setIsOpened(false));
@@ -80,6 +80,6 @@ const Sort: FC<TSortPopupProps> = ({ value }) => {
       )}
     </div>
   );
-};
+});
 
 export default Sort;

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../services/store";
 import QueryString from "qs";
@@ -7,7 +7,7 @@ import Pizza from "../components/Pizza/Pizza";
 import Sort, { sortArr } from "../components/Sort";
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination/Pagination";
-import { setUrlFilters, filterSelector } from "../services/slices/filterSlice";
+import { setUrlFilters, filterSelector, setSearchValue } from "../services/slices/filterSlice";
 import { useNavigate } from "react-router-dom";
 import { fetchPizzas, IsLoading, pizzasSelector } from "../services/slices/pizzasSlice";
 import FetchPizzasError from "../components/FetchPizzasError";
@@ -19,10 +19,10 @@ const Home: FC = () => {
   const { items, isLoading } = useSelector(pizzasSelector);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const isFirstRender = React.useRef(false);
-  const isSearch = React.useRef(false);
+  const isFirstRender = useRef(false);
+  const isSearch = useRef(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (window.location.search) {
       const params = QueryString.parse(window.location.search.substring(1));
       const sortProp = sortArr.find((item) => item.sort === params.sort);
@@ -34,9 +34,10 @@ const Home: FC = () => {
       );
       isSearch.current = true;
     }
+    setSearchValue('')
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isFirstRender.current) {
       const queryString = QueryString.stringify(
         {
@@ -51,7 +52,7 @@ const Home: FC = () => {
     isFirstRender.current = true;
   }, [categoryId, sortType, searchValue, currentPage]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isSearch.current) {
       dispatch(fetchPizzas({ sortType, categoryId, currentPage, searchValue }));
       window.scrollTo(0, 0);
