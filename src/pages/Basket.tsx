@@ -57,7 +57,7 @@ const Basket: FC = () => {
               </svg>
               Корзина
             </h2>
-            <div
+            {!isBuy.loader && <div
               className="basket__clear"
               onClick={() => dispatch(clearBasket())}
             >
@@ -99,13 +99,16 @@ const Basket: FC = () => {
               </svg>
 
               <span>Очистить корзину</span>
-            </div>
+            </div>}
+
+            
           </div>
           <div className="content__items">
-            {items?.map((item: TBasketItem, index: number) => (
+            {!isBuy.loader ? items?.map((item: TBasketItem, index: number) => (
               <BasketItem key={index} {...item} />
-            ))}
+            )) :<div className="loader"/>}
           </div>
+
           <div className="basket__bottom">
             <div className="basket__bottom-details">
               <span>

@@ -27,7 +27,7 @@ const PizzaPage:FC = () => {
   }, []);
 
   if (!item) {
-    return <div className={styles.loader} />;
+    return <div className="loader" />;
   } else {
     return (
       <div className={styles.container}>

@@ -8,8 +8,8 @@ const ErrorPage:FC = () => {
         <div className={styles.ErrorContainer}>
         <img className={styles.img} src={img404} alt="Не существующий адрес" />
         <h1>Страница не найдена</h1>
-        <Link to='/'>
-            <p>Перейти в магазин</p>
+        <Link to="/" className={`${styles.backButton} button button--black`}>
+          <span>Перейти в магазин</span>
         </Link>
         </div>
     );
