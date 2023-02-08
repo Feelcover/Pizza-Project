@@ -7,10 +7,10 @@ import Pizza from "../components/Pizza/Pizza";
 import Sort, { sortArr } from "../components/Sort";
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination/Pagination";
+import FetchPizzasError from "../components/FetchPizzasError";
 import { setUrlFilters, filterSelector, setSearchValue } from "../services/slices/filterSlice";
 import { useNavigate } from "react-router-dom";
 import { fetchPizzas, IsLoading, pizzasSelector } from "../services/slices/pizzasSlice";
-import FetchPizzasError from "../components/FetchPizzasError";
 import { TPizzaItem } from "../utils/types";
 
 const Home: FC = () => {
